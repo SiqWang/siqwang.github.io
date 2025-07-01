@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://Siqwang.github.io/sitemap.xml
+Sitemap: https://siqwang.github.io/sitemap.xml

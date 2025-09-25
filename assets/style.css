@@ -228,5 +228,5 @@ ul.clean { margin: 0; padding-left: 20px; }
 }
 
 .footer-map {
-  max-width: 120px; /* shrink map widget */
+  max-width: 320px; /* shrink map widget */
 }

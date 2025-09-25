@@ -221,12 +221,3 @@ ul.clean { margin: 0; padding-left: 20px; }
   margin-bottom: 25px; /* extra space above the button */
 }
 
-.footer-flex {
-  display: flex;
-  justify-content: space-between;  /* pushes map to one side, text to other */
-  align-items: center;             /* vertically align */
-}
-
-.footer-map {
-  max-width: 3200px; /* shrink map widget */
-}

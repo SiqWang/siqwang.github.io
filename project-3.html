@@ -125,7 +125,7 @@
       </figure>
 
       <h2>Results (STFT Spectrogram)</h2>
-      <h3>Text query: Accordion</h3>
+      <h3>Text query: accordion</h3>
 
       <div class="results-row">
         <div class="result-item">
@@ -162,7 +162,43 @@
         </div>
       </div>
 
+      <h3>Text query: acoustic guitar</h3>
 
+      <div class="results-row">
+        <div class="result-item">
+          <img src="assets/img/3/mixture-1600.png" alt="STFT Spectrogram - Mixture">
+          <audio controls>
+            <source src="assets/audio/mixture-1600.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+          <p class="caption">Mixture</p>
+        </div>
+
+        <div class="result-item">
+          <img src="assets/img/3/NMF_only_acousticguitar_1600.png" alt="STFT Spectrogram - NMF">
+          <audio controls>
+            <source src="assets/audio/NMF_only_acousticguitar_1600.wav" type="audio/wav">
+          </audio>
+          <p class="caption">NMF</p>
+        </div>
+
+        <div class="result-item">
+          <img src="assets/img/3/NMF_dyn_acousticguitar_1600.png" alt="STFT Spectrogram - NMF + Dynamic Selection">
+          <audio controls>
+            <source src="assets/audio/NMF_dyn_acousticguitar_1600.wav" type="audio/wav">
+          </audio>
+          <p class="caption">NMF + Dynamic Selection</p>
+        </div>
+
+        <div class="result-item">
+          <img src="assets/img/3/gt-segment-1600.png" alt="STFT Spectrogram - Ground Truth">
+          <audio controls>
+            <source src="assets/audio/gt-segment-1600.wav" type="audio/wav">
+          </audio>
+          <p class="caption">Ground Truth</p>
+        </div>
+      </div>
+      
     </div>
   </section>
 </main>

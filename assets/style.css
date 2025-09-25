@@ -71,6 +71,12 @@ h1, h2, h3 { line-height: 1.2; margin: 0 0 12px; }
 }
 .button.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
 .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+.icon-button img {
+  width: 20px;   /* fixed width */
+  height: 20px;  /* fixed height */
+  display: block;
+  object-fit: contain; /* ensures proper scaling */
+}
 
 /* Footer */
 .site-footer {

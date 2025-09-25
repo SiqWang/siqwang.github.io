@@ -3,20 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Project One — Your Name</title>
+  <title>Classifying Melanocytic Nevus by Using Extracted Depth-Encoded Channel Information — Siqi Wang</title>
   <link rel="stylesheet" href="assets/style.css">
-  <!-- Page-views (no-backend) counter: Busuanzi.
-       You can replace this with GoatCounter or remove if undesired. -->
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </head>
 <body>
-<header class="site-header" role="banner" aria-label="Site header">
+<header class="site-header">
   <div class="container inner">
     <a class="brand" href="index.html">Your Name</a>
     <nav aria-label="Primary">
       <a href="index.html#about">About</a>
       <a href="index.html#projects">Projects</a>
-      <a href="publications.html">Publications</a>
       <a href="cv.html">CV</a>
     </nav>
   </div>
@@ -26,34 +22,60 @@
   <section>
     <div class="container prose">
       <a class="button ghost" href="index.html#projects">← Back to Projects</a>
-      <h1 style="margin-top:16px;">Project One</h1>
-      <img class="hero" src="assets/project-1.jpg" alt="Hero image for Project One">
+
+      <h1>Classifying Melanocytic Nevus by Using Extracted Depth-Encoded Channel Information</h1>
+
+      <h2>Motivation</h2>
+      <ol>
+        <li>Longer wavelengths of polarized light have smaller tissue scattering coefficients, indicating deeper penetration.</li>
+        <li>The pathological classification basis is the location of melanocyte nests.</li>
+        <li>Some unique information of melanocytic nevi at varying depths is likely carried by different color channels.</li>
+      </ol>
+
+      <h2>Method</h2>
       <p>
-        A few paragraphs describing the project goals, your role, methods, and outcomes.
-        Add bullet points for results, links to code and paper if applicable, and a short demo GIF/screenshot.
+        We make a connection between the physical principles of dermoscopy imaging and the pathological classification
+        basis of melanocytic nevi to assist classification.
       </p>
-      <h3>Highlights</h3>
-      <ul>
-        <li>What problem you solved and why it matters.</li>
-        <li>Technologies and datasets used.</li>
-        <li>Results/metrics or user impact.</li>
-      </ul>
+
+      <figure>
+        <img class="hero" src="assets/img/1_skin_str.png" alt="Skin structure schematic">
+        <figcaption>
+          The schematic penetrating and back-scattered light at different wavelengths with skin.
+        </figcaption>
+      </figure>
+
+      <figure>
+        <img class="hero" src="assets/img/1_framework_ISBI.png" alt="Framework diagram">
+        <figcaption>
+          The framework of the proposed method. It consists of two feature extraction branches fused through a fusion module.
+        </figcaption>
+      </figure>
+
       <p>
-        <a class="button" href="#" target="_blank" rel="noopener">View Code</a>
-        <a class="button ghost" href="#" target="_blank" rel="noopener" style="margin-left:8px;">Project Site</a>
+        Our method is evaluated on a three-class melanocytic nevus dataset with ground truth verified by histological
+        examination, achieving a higher accuracy compared to other methods.
       </p>
+      
+      <h2>Related Publication</h2>
+      <p>
+        Yaoqi Tang, Qilin Sun, <strong>Siqi Wang</strong>, Bo Jiang, and Yuye Ling. 
+        <em>Classifying Melanocytic Nevus by Using Extracted Depth-Encoded Channel Information</em>. 
+        IEEE International Symposium on Biomedical Imaging (ISBI), 2024. 
+        <a href="https://ieeexplore.ieee.org/document/10635572" target="_blank" rel="noopener" class="button ghost" style="margin-left:8px;">
+          View Publication
+        </a>
+      </p>
+
     </div>
   </section>
 </main>
 
-<footer class="site-footer" role="contentinfo">
+<footer class="site-footer">
   <div class="container">
-    <span class="small">Page views: <span id="busuanzi_value_page_pv">--</span></span>
-    <span class="sep">•</span>
-    <span class="small">© <span id="year"></span> Your Name</span>
+    <span class="small">© <span id="year"></span> Siqi Wang</span>
   </div>
 </footer>
 <script src="assets/script.js"></script>
 </body>
 </html>
-

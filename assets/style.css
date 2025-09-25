@@ -221,3 +221,13 @@ ul.clean { margin: 0; padding-left: 20px; }
   margin-bottom: 25px; /* extra space above the button */
 }
 
+.footer-flex {
+  display: flex;
+  justify-content: space-between; /* map left, text right */
+  align-items: center;
+}
+
+.footer-map {
+  min-width: 200px;   /* give map room */
+  height: auto;
+}

@@ -3,20 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Project Three — Your Name</title>
+  <title>Language-queried Audio Source Separation (LASS) — Siqi Wang</title>
   <link rel="stylesheet" href="assets/style.css">
-  <!-- Page-views (no-backend) counter: Busuanzi.
-       You can replace this with GoatCounter or remove if undesired. -->
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </head>
 <body>
-<header class="site-header" role="banner" aria-label="Site header">
+  <!-- MathJax for LaTeX equations -->
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+<header class="site-header">
   <div class="container inner">
-    <a class="brand" href="index.html">Your Name</a>
+    <a class="brand" href="index.html">Siqi Wang</a>
     <nav aria-label="Primary">
       <a href="index.html#about">About</a>
       <a href="index.html#projects">Projects</a>
-      <a href="publications.html">Publications</a>
       <a href="cv.html">CV</a>
     </nav>
   </div>
@@ -25,35 +33,145 @@
 <main>
   <section>
     <div class="container prose">
-      <a class="button ghost" href="index.html#projects">← Back to Projects</a>
-      <h1 style="margin-top:16px;">Project Three</h1>
-      <img class="hero" src="assets/project-3.jpg" alt="Hero image for Project Three">
+      <a class="button ghost back-btn" href="index.html#projects">← Back to Projects</a>
+
+      <h1>Language-queried Audio Source Separation (LASS)</h1>
+
       <p>
-        A few paragraphs describing the project goals, your role, methods, and outcomes.
-        Add bullet points for results, links to code and paper if applicable, and a short demo GIF/screenshot.
+        This project explores <strong>language-queried audio source separation (LASS)</strong>, a paradigm that allows users to extract 
+        specific sounds from complex audio mixtures using natural language queries.
       </p>
-      <h3>Highlights</h3>
-      <ul>
-        <li>What problem you solved and why it matters.</li>
-        <li>Technologies and datasets used.</li>
-        <li>Results/metrics or user impact.</li>
-      </ul>
       <p>
-        <a class="button" href="#" target="_blank" rel="noopener">View Code</a>
-        <a class="button ghost" href="#" target="_blank" rel="noopener" style="margin-left:8px;">Project Site</a>
+        For example, given a piece of music with multiple instruments, a text query such as <em>“accordion”</em> prompts the system to 
+        isolate and output only the accordion part from the mixture. This approach offers a more flexible and intuitive interaction 
+        with audio separation systems, allowing users to describe their desired output in plain language rather than relying on 
+        predefined labels or manual filtering.
       </p>
+
+      <h2>Method</h2>
+      <p>
+        We propose a <strong>lightweight and interpretable framework</strong> for language-queried audio source separation (LASS) by integrating 
+        <strong>Non-negative Matrix Factorization (NMF)</strong> with <strong>Contrastive Language-Audio Pretraining (CLAP)</strong> embeddings. The system 
+        takes as input a mixture audio signal and a natural language query, and outputs the audio source most relevant to the query. 
+        Unlike end-to-end deep learning models, our approach requires no training or large-scale datasets, making it computationally 
+        efficient and suitable for real-time or resource-limited applications.
+      </p>
+      <p>
+        To enhance separation quality, we introduce a <strong>dynamic selection module</strong> that adaptively merges audio components based on 
+        similarity to the text query, effectively reducing issues such as source fragmentation and imbalance. Additionally, we explore 
+        <strong>adaptive time-domain filtering</strong> to improve temporal smoothness, particularly for tonal instruments such as the erhu and violin. 
+        While our method is less accurate than large-scale deep learning approaches like <em>AudioSep</em>, it prioritizes efficiency, 
+        interpretability, and extensibility.
+      </p>
+
+      <figure>
+        <img class="figure-large" src="assets/img/3_LASS_framework.png" alt="LASS Framework">
+        <figcaption>
+          Figure 1: Overview of the proposed framework. The system takes a mixture audio signal and a text query as input and 
+          outputs the separated audio source corresponding to the query.
+        </figcaption>
+      </figure>
+
+      <h3>Framework Overview</h3>
+      <p>
+        As illustrated in Figure 1, we begin by applying the <strong>Short-Time Fourier Transform (STFT)</strong> to the mixture audio to obtain 
+        its spectrogram, which contains both magnitude and phase information. The magnitude spectrogram is decomposed using 
+        <strong>NMF</strong> into several non-negative components. Each component is then recombined with the original phase and converted 
+        back to waveform segments via inverse STFT. These audio segments are passed through a <strong>CLAP audio encoder</strong> to obtain 
+        embeddings, while the text query is processed by a <strong>CLAP text encoder</strong> to generate a text embedding. By computing 
+        <strong>cosine similarity</strong> between the text and audio embeddings, we identify the component(s) most relevant to the query 
+        through the dynamic selection strategy, which then produces the final separated audio output.
+      </p>
+
+      <h3>1. Non-negative Matrix Factorization (NMF)</h3>
+        <p>
+          We apply NMF to decompose the magnitude spectrogram into 2 non-negative matrices, 
+          \(W\) and \(H\), such that:
+        </p>
+
+        $$
+        V \approx WH
+        $$
+
+        <p>
+          We experimented with <strong>Itakura-Saito (IS) divergence</strong> and 
+          <strong>Kullback-Leibler (KL) divergence</strong> as cost functions. KL divergence yielded 
+          better results, and thus we adopt it:
+        </p>
+
+        $$
+        D_{KL}(A \| B) = \sum_{i,j} \left( A_{ij} \log \frac{A_{ij}}{B_{ij}} - A_{ij} + B_{ij} \right)
+        $$
+        The corresponding multiplicative update rules are:
+        $$
+        H_{kn} \leftarrow H_{kn} \frac{\sum_m W_{mk} \frac{V_{mn}}{(WH)_{mn}}}{\sum_m W_{mk}}, 
+        \quad
+        W_{mk} \leftarrow W_{mk} \frac{\sum_n H_{kn} \frac{V_{mn}}{(WH)_{mn}}}{\sum_n H_{kn}}
+        $$
+      </p>
+
+      <h3>2. Dynamic Selection</h3>
+      <p>
+        To address source fragmentation, we propose a <strong>dynamic selection module</strong> that ensembles NMF components based on 
+        their similarity to the text embedding. Specifically, cosine similarity between the CLAP text embedding and each audio 
+        embedding guides the selection of relevant components, which are then combined into the final separated output.
+      </p>
+
+      <figure>
+        <img class="figure-small" src="assets/img/3_lass_dyn_alg.png" alt="Dynamic Similarity Ensembler">
+        <figcaption>
+          Dynamic selection module based on CLAP similarity.
+        </figcaption>
+      </figure>
+
+      <h2>Results</h2>
+      <h3>Text query: Accordion</h3>
+
+      <div class="results-row">
+        <div class="result-item">
+          <img src="assets/img/3/mixture-0.png" alt="STFT Spectrogram - Mixture">
+          <audio controls>
+            <source src="assets/audio/mixture-0.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+          <p class="caption">STFT Spectrogram - Mixture</p>
+        </div>
+
+        <div class="result-item">
+          <img src="assets/img/3/NMF_only_accordion_0.png" alt="STFT Spectrogram - NMF">
+          <audio controls>
+            <source src="assets/audio/NMF_only_accordion_0.wav" type="audio/wav">
+          </audio>
+          <p class="caption">STFT Spectrogram - NMF</p>
+        </div>
+
+        <div class="result-item">
+          <img src="assets/img/3/NMF_dyn_accordion_0.png" alt="STFT Spectrogram - NMF + Dynamic Selection">
+          <audio controls>
+            <source src="assets/audio/NMF_dyn_accordion_0.wav" type="audio/wav">
+          </audio>
+          <p class="caption">STFT Spectrogram - NMF + Dynamic Selection</p>
+        </div>
+
+        <div class="result-item">
+          <img src="assets/img/3/gt-segment-0.png" alt="STFT Spectrogram - Ground Truth">
+          <audio controls>
+            <source src="assets/audio/gt-segment-0.wav" type="audio/wav">
+          </audio>
+          <p class="caption">STFT Spectrogram - Ground Truth</p>
+        </div>
+      </div>
+
+
     </div>
   </section>
 </main>
 
-<footer class="site-footer" role="contentinfo">
+<footer class="site-footer">
   <div class="container">
-    <span class="small">Page views: <span id="busuanzi_value_page_pv">--</span></span>
-    <span class="sep">•</span>
-    <span class="small">© <span id="year"></span> Your Name</span>
+    <span class="small">© <span id="year"></span> Siqi Wang</span>
   </div>
 </footer>
 <script src="assets/script.js"></script>
 </body>
 </html>
-

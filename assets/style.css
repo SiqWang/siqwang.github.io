@@ -16,6 +16,15 @@ body {
   margin: 0; font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
   color: var(--text); background: var(--bg);
 }
+figure {
+  text-align: center;
+}
+
+figcaption {
+  font-size: 0.9em;
+  color: var(--muted);
+  margin-top: 8px;
+}
 
 .container {
   width: min(1100px, 92vw);
@@ -70,13 +79,42 @@ h1, h2, h3 { line-height: 1.2; margin: 0 0 12px; }
   padding: 10px 14px; border-radius: 12px; text-decoration: none; font-weight: 700;
 }
 .button.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-.icon-button img {
-  width: 2px;   /* fixed width */
-  height: 2px;  /* fixed height */
-  display: block;
-  object-fit: contain; /* ensures proper scaling */
+.back-btn {
+  margin-bottom: 20px;  /* adds space below button */
+  display: inline-block;
 }
+.up-btn {
+  margin-top: 20px;  /* adds space above button */
+  display: inline-block;
+}
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+
+/* horizontal row for icons */
+.icon-row {
+  display: flex;
+  gap: 12px;       /* spacing between icons */
+  margin-top: 15px;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  /* background: var(--accent);
+  transition: background 0.2s ease; */
+}
+.icon-button img {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+/* .icon-button:hover {
+  background: #1d4ed8;
+} */
 
 /* Footer */
 .site-footer {
@@ -87,31 +125,98 @@ h1, h2, h3 { line-height: 1.2; margin: 0 0 12px; }
 
 /* Project detail */
 .hero {
-  width: 100%; max-height: 420px; object-fit: cover; border-radius: 16px; border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  width: 100%; max-height: 420px; object-fit: cover;
 }
 .figure-small {
   max-width: 400px;
   width: 100%;
   display: block;
   margin: 0 auto;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
 }
-
 .figure-large {
   max-width: 900px;
   width: 100%;
   display: block;
   margin: 24px auto;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
 }
 .prose { max-width: 80ch; }
 ul.clean { margin: 0; padding-left: 20px; }
-.tag {
-  display: inline-block; margin: 6px 8px 0 0; padding: 6px 10px; border-radius: 999px;
-  background: var(--card); border: 1px solid var(--border);
+
+
+.about-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.about-text {
+  flex: 1 1 66%;
+}
+
+.about-photo {
+  flex: 1 1 30%;
+  text-align: center;
+}
+
+.about-photo img {
+  max-width: 180px;   /* smaller size */
+  width: 100%;
+  border-radius: 20%;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+
+.results-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: nowrap; /* keep them in one row */
+  margin-top: 20px;
+}
+
+.result-item {
+  flex: 1 1 0;
+  text-align: center;
+}
+
+.result-item img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto 8px;
+}
+
+.result-item audio {
+  width: 100%; /* align player below image */
+  margin-top: 6px;
+}
+
+.result-item .caption {
+  font-size: 0.9em;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.skills {
+  margin-top: 20px;
+  margin-bottom: 20px; /* increase spacing below skills */
+}
+
+.skills .tag {
+  display: inline-block;
+  background: #f8f9fa;
+  border: 1px solid #dcdcdc;
+  border-radius: 20px;
+  padding: 6px 14px;
+  margin: 4px;
+  font-size: 0.95em;
+}
+
+.cv-button {
+  margin-top: 20px; /* extra space above the button */
+  margin-bottom: 25px; /* extra space above the button */
 }
